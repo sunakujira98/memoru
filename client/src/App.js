@@ -18,7 +18,7 @@ const App = () => {
   }, [currentId, dispatch])
 
   return (
-    <Container maxwidth='lg'>
+    <Container maxWidth='lg'>
       <AppBar className={classes.appBar} position='static' color='inherit'>
         <Typography className={classes.heading} variant='h2' align='center'>
           Memoru
@@ -28,15 +28,16 @@ const App = () => {
       <Grow in>
         <Container>
           <Grid
+            className={classes.mainContainer}
             container
             justify='space-between'
             alignItems='stretch'
             spacing={3}
           >
-            <Grid items xs={12} sm={7}>
+            <Grid item xs={12} sm={7}>
               <Posts setCurrentId={setCurrentId} />
             </Grid>
-            <Grid items xs={12} sm={4}>
+            <Grid item xs={12} sm={4}>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
