@@ -1,10 +1,9 @@
+import mongoose from 'mongoose'
 import PostMesage from '../models/postMessage.js'
 
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMesage.find()
-
-    console.log(postMessages)
 
     res.status(200).json(postMessages)
   } catch (error) {
@@ -22,11 +21,12 @@ export const createPost = async (req, res) => {
 
     res.send(201).json(newPost)
   } catch (error) {
-    res.send(409).json({ message: error.message })
+    console.log(error)
   }
 }
 
 export const updatePost = async (req, res) => {
+  console.log('REQBODY', req.body)
   const { id: _id } = req.params
   const post = req.body
 
