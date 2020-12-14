@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import postMessage from '../models/postMessage.js'
 import PostMesage from '../models/postMessage.js'
 
 export const getPosts = async (req, res) => {
@@ -19,14 +20,13 @@ export const createPost = async (req, res) => {
   try {
     await newPost.save()
 
-    res.send(201).json(newPost)
+    res.status(201).json(newPost)
   } catch (error) {
     console.log(error)
   }
 }
 
 export const updatePost = async (req, res) => {
-  console.log('REQBODY', req.body)
   const { id: _id } = req.params
   const post = req.body
 
@@ -42,4 +42,15 @@ export const updatePost = async (req, res) => {
   )
 
   res.json(updatePost)
+}
+
+export const deletePost = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('No post with that id')
+
+  await postMessage.findByIdAndRemove(id)
+
+  res.json({ message: 'Post deleted successfully' })
 }
