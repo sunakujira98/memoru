@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 
@@ -9,6 +9,7 @@ import memoru from './images/memoru.png'
 import useStyle from './styles'
 
 const App = () => {
+  const [currentId, setCurrentId] = useState(null)
   const classes = useStyle()
   const dispatch = useDispatch()
 
@@ -33,10 +34,10 @@ const App = () => {
             spacing={3}
           >
             <Grid items xs={12} sm={7}>
-              <Posts />
+              <Posts setCurrentId={setCurrentId} />
             </Grid>
             <Grid items xs={12} sm={4}>
-              <Form />
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
