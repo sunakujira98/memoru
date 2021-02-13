@@ -1,10 +1,9 @@
 import mongoose from 'mongoose'
-import postMessage from '../models/postMessage.js'
-import PostMesage from '../models/postMessage.js'
+import PostMessage from '../models/postMessage.js'
 
 export const getPosts = async (req, res) => {
   try {
-    const postMessages = await PostMesage.find()
+    const postMessages = await PostMessage.find()
 
     res.status(200).json(postMessages)
   } catch (error) {
@@ -15,7 +14,7 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
   const post = req.body
 
-  const newPost = new PostMesage({
+  const newPost = new postMessage({
     ...post,
     creator: req.userId,
     createdAt: new Date().toISOString(),
@@ -37,7 +36,7 @@ export const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send('No post with that id')
 
-  const updatePost = await PostMesage.findByIdAndUpdate(
+  const updatePost = await PostMessage.findByIdAndUpdate(
     _id,
     { ...post, _id },
     {
@@ -54,7 +53,7 @@ export const deletePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send('No post with that id')
 
-  await postMessage.findByIdAndRemove(id)
+  await PostMessage.findByIdAndRemove(id)
 
   res.json({ message: 'Post deleted successfully' })
 }
@@ -67,22 +66,19 @@ export const likePost = async (req, res) => {
   }
 
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send('No post with that id')
+    return res.status(404).send(`No post with id: ${id}`)
 
-  const post = await PostMesage.findById(id)
+  const post = await PostMessage.findById(id)
 
   const index = post.likes.findIndex((id) => id === String(req.userId))
 
   if (index === -1) {
-    // like the post
     post.likes.push(req.userId)
   } else {
-    // dislike a post
     post.likes = post.likes.filter((id) => id !== String(req.userId))
   }
-
-  const updatedPost = await PostMesage.findByIdAndUpdate(id, post, {
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
     new: true,
   })
-  res.json(updatedPost)
+  res.status(200).json(updatedPost)
 }
