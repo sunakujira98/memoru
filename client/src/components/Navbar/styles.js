@@ -11,12 +11,10 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: '10px 50px',
   },
-
   heading: {
-    color: 'rgba(0, 183, 255, 1)',
+    color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',
   },
-
   image: {
     marginLeft: '15px',
   },
@@ -27,7 +25,7 @@ export default makeStyles((theme) => ({
   },
   profile: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     width: '400px',
   },
   userName: {
