@@ -15,7 +15,11 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
   const post = req.body
 
-  const newPost = new PostMesage(post)
+  const newPost = new PostMesage({
+    ...post,
+    creator: req.userId,
+    createdAt: new Date().toISOString(),
+  })
 
   try {
     await newPost.save()
