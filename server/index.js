@@ -9,6 +9,12 @@ import userRoutes from './routes/users.js'
 const app = express()
 dotenv.config()
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')))
+
+  app.get('*', (req, res) => res.sendFile(path.resolve(dirname, '../client', 'build', 'index.html')))
+}
+
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
