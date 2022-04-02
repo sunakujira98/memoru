@@ -33,6 +33,12 @@ mongoose
 mongoose.set('useFindAndModify', false)
 
 const dirname = path.resolve()
-app.use(express.static(path.join(dirname, '../client/build')))
-
-app.get('*', (req, res) => res.sendFile(path.resolve(dirname, '../client', 'build', 'index.html')))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(dirname, '../client/build')))
+  
+  app.get('*', (req, res) => res.sendFile(path.resolve(dirname, '../client', 'build', 'index.html')))
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....')
+  })
+}
